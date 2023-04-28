@@ -1,4 +1,4 @@
-# Meta for laravel
+# Metadata for laravel
 
 This package is for the metadata of different Laravel projects.
 
@@ -6,7 +6,7 @@ This package is for the metadata of different Laravel projects.
 
 Run the following command to pull in the latest version:
 ```bash
-composer require jobmetric/meta
+composer require jobmetric/metadata
 ```
 
 ### Add service provider
@@ -18,7 +18,7 @@ Add the service provider to the providers array in the config/app.php config fil
 
     ...
 
-    JobMetric\Meta\Providers\MetaServiceProvider::class,
+    JobMetric\Metadata\Providers\MetadataServiceProvider::class,
 ]
 ```
 
@@ -27,7 +27,7 @@ Add the service provider to the providers array in the config/app.php config fil
 You need to publish the migration to create the `metas` table:
 
 ```php
-php artisan vendor:publish --provider="JobMetric\Meta\Providers\MetaServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="JobMetric\Metadata\Providers\MetadataServiceProvider" --tag="migrations"
 ```
 
 After that, you need to run migrations.
