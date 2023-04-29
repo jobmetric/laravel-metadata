@@ -11,7 +11,7 @@ class MetadataService
     /**
      * get metadata
      *
-     * @param Model $model
+     * @param Model       $model
      * @param string|null $key
      *
      * @return Collection|Model|null
@@ -33,8 +33,8 @@ class MetadataService
     /**
      * store metadata
      *
-     * @param Model $model
-     * @param string $key
+     * @param Model             $model
+     * @param string            $key
      * @param string|array|null $value
      *
      * @return Model
@@ -59,7 +59,7 @@ class MetadataService
     /**
      * delete metadata
      *
-     * @param Model $model
+     * @param Model       $model
      * @param string|null $key
      *
      * @return void
