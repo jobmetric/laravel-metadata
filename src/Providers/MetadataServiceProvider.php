@@ -21,6 +21,9 @@ class MetadataServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // set translations
+        $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'metadata');
+
         // publish migration
         if (!$this->migrationMetaExists()) {
             $this->publishes([
