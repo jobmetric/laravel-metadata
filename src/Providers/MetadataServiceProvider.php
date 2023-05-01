@@ -10,7 +10,7 @@ class MetadataServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('MetadataService', function ($app) {
-            return new MetadataService;
+            return new MetadataService($app);
         });
     }
 

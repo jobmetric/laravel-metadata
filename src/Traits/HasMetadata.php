@@ -12,25 +12,24 @@ use JobMetric\Metadata\Models\Meta;
 trait HasMetadata
 {
     /**
-     * metadata has many relationship
+     * metaable has many relationship
      *
      * @return MorphMany
      */
-    public function metadata(): MorphMany
+    public function metaable(): MorphMany
     {
         return $this->morphMany(Meta::class, 'metaable');
     }
 
     /**
-     * scope key for select metadata relationship
+     * scope key for select metaable relationship
      *
-     * @param Builder $builder
      * @param string  $key
      *
-     * @return Builder
+     * @return MorphMany
      */
-    public function scopeMetadataKey(Builder $builder, string $key): Builder
+    public function metaableKey(string $key): MorphMany
     {
-        return $builder->where('key', $key);
+        return $this->metaable()->where('key', $key);
     }
 }
