@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
 use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
+use JobMetric\Metadata\Exceptions\ModelMetaableTraitNotFoundException;
 
 class MetadataService
 {
@@ -51,11 +52,14 @@ class MetadataService
      *
      * @return mixed
      * @throws MetadataKeyNotFoundException
+     * @throws ModelMetaableTraitNotFoundException
      */
     public function get(Model $model, string|null $key = null): mixed
     {
         // @todo config cache
-        // @todo exist has trait metaable -> class_uses
+        if(!in_array('JobMetric\Metadata\Traits\HasMetadata', class_uses($model))) {
+            throw new ModelMetaableTraitNotFoundException($model::class);
+        }
 
         if(is_null($key)) {
             $data = collect();
@@ -66,7 +70,7 @@ class MetadataService
             $builder = $model->metaable();
             foreach($builder->get() as $item) {
                 if($item->is_json) {
-                    $data->add(json_decode($item->value));
+                    $data->add(json_decode($item->value, true));
                 } else {
                     $data->add($item->value);
                 }
@@ -78,7 +82,7 @@ class MetadataService
         $object = $model->metaableKey($key)->first();
         if($object) {
             if($object->is_json) {
-                return json_decode($object->value);
+                return json_decode($object->value, true);
             } else {
                 return $object->value;
             }
@@ -95,9 +99,14 @@ class MetadataService
      * @param string|array|null $value
      *
      * @return Model
+     * @throws ModelMetaableTraitNotFoundException
      */
     public function store(Model $model, string $key, string|array|null $value = null): Model
     {
+        if(!in_array('JobMetric\Metadata\Traits\HasMetadata', class_uses($model))) {
+            throw new ModelMetaableTraitNotFoundException($model::class);
+        }
+
         $params['key'] = $key;
 
         if(is_array($value)) {
@@ -120,9 +129,14 @@ class MetadataService
      * @param string|null $key
      *
      * @return void
+     * @throws ModelMetaableTraitNotFoundException
      */
     public function delete(Model $model, string|null $key = null): void
     {
+        if(!in_array('JobMetric\Metadata\Traits\HasMetadata', class_uses($model))) {
+            throw new ModelMetaableTraitNotFoundException($model::class);
+        }
+
         $builder = $model->metaable();
 
         if(!is_null($key)) {
