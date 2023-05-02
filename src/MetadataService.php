@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
+use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
 
 class MetadataService
 {
@@ -49,6 +50,7 @@ class MetadataService
      * @param string|null $key
      *
      * @return mixed
+     * @throws MetadataKeyNotFoundException
      */
     public function get(Model $model, string|null $key = null): mixed
     {
@@ -82,7 +84,7 @@ class MetadataService
             }
         }
 
-        return null;
+        throw new MetadataKeyNotFoundException($key);
     }
 
     /**
