@@ -27,7 +27,7 @@ Add the service provider to the providers array in the config/app.php config fil
 You need to publish the migration to create the `metas` table:
 
 ```php
-php artisan vendor:publish --provider="JobMetric\Metadata\Providers\MetadataServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="JobMetric\Metadata\Providers\MetadataServiceProvider" --tag="metadata-migrations"
 ```
 
 After that, you need to run migrations.
