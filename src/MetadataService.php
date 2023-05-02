@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
 use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
 use JobMetric\Metadata\Exceptions\ModelMetaableTraitNotFoundException;
+use Throwable;
 
 class MetadataService
 {
@@ -51,8 +52,7 @@ class MetadataService
      * @param string|null $key
      *
      * @return mixed
-     * @throws MetadataKeyNotFoundException
-     * @throws ModelMetaableTraitNotFoundException
+     * @throws Throwable
      */
     public function get(Model $model, string|null $key = null): mixed
     {
@@ -99,7 +99,7 @@ class MetadataService
      * @param string|array|null $value
      *
      * @return Model
-     * @throws ModelMetaableTraitNotFoundException
+     * @throws Throwable
      */
     public function store(Model $model, string $key, string|array|null $value = null): Model
     {
@@ -129,7 +129,7 @@ class MetadataService
      * @param string|null $key
      *
      * @return void
-     * @throws ModelMetaableTraitNotFoundException
+     * @throws Throwable
      */
     public function delete(Model $model, string|null $key = null): void
     {
