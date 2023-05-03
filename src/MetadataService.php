@@ -107,17 +107,21 @@ class MetadataService
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
-        $params['key'] = $key;
+        $params = [
+            'value'   => $value,
+            'is_json' => false
+        ];
 
         if(is_array($value)) {
-            $params['value'] = json_encode($value, JSON_UNESCAPED_UNICODE);
-            $params['is_json'] = true;
-        } else {
-            $params['value'] = $value;
-            $params['is_json'] = false;
+            $params = [
+                'value'   => json_encode($value, JSON_UNESCAPED_UNICODE),
+                'is_json' => true
+            ];
         }
 
-        $model->metadata()->create($params);
+        $model->metaable()->firstOrCreate([
+            'key' => $key
+        ], $params);
 
         return $model;
     }
@@ -143,7 +147,7 @@ class MetadataService
             $builder->metaableKey($key);
         }
 
-        $builder->get()->each(function (Builder $item) {
+        $builder->get()->each(function ($item) {
             $item->delete();
         });
     }
