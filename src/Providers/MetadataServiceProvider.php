@@ -21,10 +21,23 @@ class MetadataServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerMigrations();
         $this->registerPublishables();
 
         // set translations
         $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'metadata');
+    }
+
+    /**
+     * Register the Passport migration files.
+     *
+     * @return void
+     */
+    protected function registerMigrations(): void
+    {
+        if($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        }
     }
 
     /**
@@ -34,35 +47,11 @@ class MetadataServiceProvider extends ServiceProvider
      */
     protected function registerPublishables(): void
     {
-        if(!$this->app->runningInConsole()) {
-            return;
-        }
-
-        // publish migration
-        if(!$this->migrationMetaExists()) {
+        if($this->app->runningInConsole()) {
+            // publish migration
             $this->publishes([
-                realpath(__DIR__.'/../../database/migrations/create_metas_table.php.stub') => database_path('migrations/'.date('Y_m_d_His', time()).'_create_metas_table.php')
+                realpath(__DIR__.'/../../database/migrations') => database_path('migrations')
             ], 'metadata-migrations');
         }
-    }
-
-    /**
-     * check migration meta table
-     *
-     * @return bool
-     */
-    private function migrationMetaExists(): bool
-    {
-        $path = database_path('migrations/');
-        $files = scandir($path);
-
-        foreach($files as &$value) {
-            $position = strpos($value, 'create_metas_table');
-            if($position !== false) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
