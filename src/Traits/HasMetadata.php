@@ -12,6 +12,13 @@ use JobMetric\Metadata\Models\Meta;
 trait HasMetadata
 {
     /**
+     * The attributes that can be stored in the metadata table.
+     *
+     * @var array<string>
+     */
+    protected array $metadata = [];
+
+    /**
      * metaable has many relationship
      *
      * @return MorphMany

@@ -41,7 +41,7 @@
                 "JobMetric\\Metadata\\MetadataServiceProvider"
             ],
             "aliases": {
-                "Metadata": "JobMetric\\Metadata\\Facades\\MetadataService"
+                "JMetadata": "JobMetric\\Metadata\\Facades\\JMetadata"
             }
         }
     },
