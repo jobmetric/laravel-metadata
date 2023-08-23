@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use JMetadata;
+use JobMetric\Metadata\JMetadata;
 
 if(!function_exists('metadataGet')) {
     /**
