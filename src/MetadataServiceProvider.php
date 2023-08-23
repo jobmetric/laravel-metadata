@@ -1,6 +1,6 @@
 <?php
 
-namespace JobMetric\Metadata\Providers;
+namespace JobMetric\Metadata;
 
 use Illuminate\Support\ServiceProvider;
 use JobMetric\Metadata\MetadataService;
@@ -25,7 +25,7 @@ class MetadataServiceProvider extends ServiceProvider
         $this->registerPublishables();
 
         // set translations
-        $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'metadata');
+        $this->loadTranslationsFrom(realpath(__DIR__.'/../lang'), 'metadata');
     }
 
     /**
@@ -36,7 +36,7 @@ class MetadataServiceProvider extends ServiceProvider
     protected function registerMigrations(): void
     {
         if($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         }
     }
 
@@ -50,7 +50,7 @@ class MetadataServiceProvider extends ServiceProvider
         if($this->app->runningInConsole()) {
             // publish migration
             $this->publishes([
-                realpath(__DIR__.'/../../database/migrations') => database_path('migrations')
+                realpath(__DIR__.'/../database/migrations') => database_path('migrations')
             ], 'metadata-migrations');
         }
     }
