@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
 use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
+use JobMetric\Metadata\Exceptions\ModelMetaableInterfaceNotFoundException;
+use JobMetric\Metadata\Exceptions\ModelMetaableKeyNotAllowedFieldException;
 use JobMetric\Metadata\Exceptions\ModelMetaableTraitNotFoundException;
 use Throwable;
 
@@ -57,8 +59,12 @@ class JMetadata
     public function get(Model $model, string|null $key = null): mixed
     {
         // @todo config cache
-        if(!in_array('JobMetric\Metadata\Traits\HasMetadata', class_uses($model))) {
+        if(!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
+        }
+
+        if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
+            throw new ModelMetaableInterfaceNotFoundException($model::class);
         }
 
         if(is_null($key)) {
@@ -77,6 +83,11 @@ class JMetadata
             }
 
             return $data;
+        }
+
+        $allowedFields = $model->allowMetadataFields();
+        if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
+            throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
         }
 
         $object = $model->metaableKey($key)->first();
@@ -103,8 +114,17 @@ class JMetadata
      */
     public function store(Model $model, string $key, string|array|null $value = null): Model
     {
-        if(!in_array('JobMetric\Metadata\Traits\HasMetadata', class_uses($model))) {
+        if(!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
+        }
+
+        if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
+            throw new ModelMetaableInterfaceNotFoundException($model::class);
+        }
+
+        $allowedFields = $model->allowMetadataFields();
+        if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
+            throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
         }
 
         $params = [
@@ -137,8 +157,17 @@ class JMetadata
      */
     public function delete(Model $model, string|null $key = null): void
     {
-        if(!in_array('JobMetric\Metadata\Traits\HasMetadata', class_uses($model))) {
+        if(!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
+        }
+
+        if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
+            throw new ModelMetaableInterfaceNotFoundException($model::class);
+        }
+
+        $allowedFields = $model->allowMetadataFields();
+        if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
+            throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
         }
 
         $builder = $model->metaable();
