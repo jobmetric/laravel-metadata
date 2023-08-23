@@ -12,7 +12,7 @@ use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
 use JobMetric\Metadata\Exceptions\ModelMetaableTraitNotFoundException;
 use Throwable;
 
-class MetadataService
+class JMetadata
 {
     use Macroable;
 
