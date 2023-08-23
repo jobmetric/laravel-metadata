@@ -1,6 +1,6 @@
 <?php
 
-namespace JobMetric\Metadata\Traits;
+namespace JobMetric\Metadata;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -17,6 +17,28 @@ trait HasMetadata
      * @var array<string>
      */
     protected array $metadata = [];
+
+    /**
+     * set metadata field
+     *
+     * @param array $fields
+     *
+     * @return void
+     */
+    public function setMetadataFields(array $fields = []): void
+    {
+        $this->metadata = array_merge($this->metadata, $fields);
+    }
+
+    /**
+     * get metadata field
+     *
+     * @return array
+     */
+    public function getMetadataFields(): array
+    {
+        return $this->metadata;
+    }
 
     /**
      * metaable has many relationship
