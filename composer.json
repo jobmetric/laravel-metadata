@@ -38,7 +38,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "JobMetric\\Metadata\\Providers\\MetadataServiceProvider"
+                "JobMetric\\Metadata\\MetadataServiceProvider"
             ],
             "aliases": {
                 "Metadata": "JobMetric\\Metadata\\Facades\\MetadataService"
