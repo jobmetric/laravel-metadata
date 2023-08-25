@@ -4,13 +4,30 @@ namespace JobMetric\Metadata;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use JobMetric\Metadata\Exceptions\ModelMetadataInterfaceNotFoundException;
 use JobMetric\Metadata\Models\Meta;
+use Throwable;
 
 /**
  * @method morphMany(string $class, string $string)
  */
 trait HasMetadata
 {
+    /**
+     * boot has metadata
+     *
+     * @return void
+     * @throws Throwable
+     */
+    public static function bootHasMetadata(): void
+    {
+        static::retrieved(function ($model) {
+            if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
+                throw new ModelMetadataInterfaceNotFoundException($model::class);
+            }
+        });
+    }
+
     /**
      * The attributes that can be stored in the metadata table.
      *
