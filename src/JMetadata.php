@@ -152,14 +152,14 @@ class JMetadata
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
-        $allowedFields = $model->allowMetadataFields();
-        if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
-            throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
-        }
-
         $builder = $model->metaable();
 
         if(!is_null($key)) {
+            $allowedFields = $model->allowMetadataFields();
+            if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
+                throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
+            }
+
             $builder->metaableKey($key);
         }
 
