@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
 use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
-use JobMetric\Metadata\Exceptions\ModelMetaableInterfaceNotFoundException;
 use JobMetric\Metadata\Exceptions\ModelMetaableKeyNotAllowedFieldException;
 use JobMetric\Metadata\Exceptions\ModelMetaableTraitNotFoundException;
 use Throwable;
@@ -63,10 +62,6 @@ class JMetadata
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
-        if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
-            throw new ModelMetaableInterfaceNotFoundException($model::class);
-        }
-
         if(is_null($key)) {
             $data = collect();
 
@@ -118,10 +113,6 @@ class JMetadata
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
-        if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
-            throw new ModelMetaableInterfaceNotFoundException($model::class);
-        }
-
         $allowedFields = $model->allowMetadataFields();
         if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
             throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
@@ -159,10 +150,6 @@ class JMetadata
     {
         if(!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
-        }
-
-        if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
-            throw new ModelMetaableInterfaceNotFoundException($model::class);
         }
 
         $allowedFields = $model->allowMetadataFields();

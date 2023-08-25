@@ -5,7 +5,7 @@ namespace JobMetric\Metadata\Exceptions;
 use Exception;
 use Throwable;
 
-class ModelMetaableInterfaceNotFoundException extends Exception
+class ModelMetadataInterfaceNotFoundException extends Exception
 {
     public function __construct(string $model, int $code = 400, ?Throwable $previous = null)
     {

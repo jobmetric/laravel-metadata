@@ -12,6 +12,7 @@ if(!function_exists('metadataGet')) {
      * @param string|null $key
      *
      * @return Collection|Model|null
+     * @throws Throwable
      */
     function metadataGet(Model $model, string|null $key): Collection|Model|null
     {
@@ -28,6 +29,7 @@ if(!function_exists('metadataStore')) {
      * @param string|array|null $value
      *
      * @return Model
+     * @throws Throwable
      */
     function metadataStore(Model $model, string $key, string|array|null $value): Model
     {
@@ -43,6 +45,7 @@ if(!function_exists('metadataDelete')) {
      * @param string|null $key
      *
      * @return void
+     * @throws Throwable
      */
     function metadataDelete(Model $model, string|null $key = null): void
     {
