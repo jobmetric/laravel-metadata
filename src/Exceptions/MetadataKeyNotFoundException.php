@@ -9,8 +9,6 @@ class MetadataKeyNotFoundException extends Exception
 {
     public function __construct(string $key, int $code = 400, ?Throwable $previous = null)
     {
-        $message = 'Metadata key "'.$key.'" not found!';
-
-        parent::__construct($message, $code, $previous);
+        parent::__construct("Metadata key $key not found!", $code, $previous);
     }
 }
