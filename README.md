@@ -1,39 +1,29 @@
+[contributors-shield]: https://img.shields.io/github/contributors/jobmetric/laravel-metadata.svg?style=for-the-badge
+[contributors-url]: https://github.com/jobmetric/laravel-metadata/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/jobmetric/laravel-metadata.svg?style=for-the-badge&label=Fork
+[forks-url]: https://github.com/jobmetric/laravel-metadata/network/members
+[stars-shield]: https://img.shields.io/github/stars/jobmetric/laravel-metadata.svg?style=for-the-badge
+[stars-url]: https://github.com/jobmetric/laravel-metadata/stargazers
+[license-shield]: https://img.shields.io/github/license/jobmetric/laravel-metadata.svg?style=for-the-badge
+[license-url]: https://github.com/jobmetric/laravel-metadata/blob/master/LICENCE.md
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-blue.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/majidmohammadian
+
 # Metadata for laravel
 
 This package is for the metadata of different Laravel projects.
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 ## Install via composer
 
 Run the following command to pull in the latest version:
 ```bash
-composer require jobmetric/metadata
-```
-
-### Add service provider
-
-Add the service provider to the providers array in the config/app.php config file as follows:
-
-```php
-'providers' => [
-
-    ...
-
-    JobMetric\Metadata\MetadataServiceProvider::class,
-]
-```
-
-### Publish Migrations
-
-You need to publish the migration to create the `metas` table:
-
-```php
-php artisan vendor:publish --provider="JobMetric\Metadata\MetadataServiceProvider" --tag="metadata-migrations"
-```
-
-After that, you need to run migrations.
-
-```php
-php artisan migrate
+composer require jobmetric/laravel-metadata
 ```
 
 ## Documentation
