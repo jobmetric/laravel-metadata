@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static Model store(Model $model, string $key, string|array|null $value = null)
  * @method static void delete(Model $model, string|null $key = null)
  *
- * @see \JobMetric\Metadata\JMetadata
+ * @see \JobMetric\Metadata\Metadata
  */
-class JMetadata extends Facade
+class Metadata extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -21,6 +21,6 @@ class JMetadata extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'JMetadata';
+        return 'Metadata';
     }
 }

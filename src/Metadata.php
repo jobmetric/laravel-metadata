@@ -13,7 +13,7 @@ use JobMetric\Metadata\Exceptions\ModelMetaableKeyNotAllowedFieldException;
 use JobMetric\Metadata\Exceptions\ModelMetaableTraitNotFoundException;
 use Throwable;
 
-class JMetadata
+class Metadata
 {
     use Macroable;
 
@@ -49,7 +49,7 @@ class JMetadata
     /**
      * get metadata
      *
-     * @param Model       $model
+     * @param Model $model
      * @param string|null $key
      *
      * @return mixed
@@ -58,19 +58,19 @@ class JMetadata
     public function get(Model $model, string|null $key = null): mixed
     {
         // @todo config cache
-        if(!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
+        if (!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
-        if(is_null($key)) {
+        if (is_null($key)) {
             $data = collect();
 
             /**
              * @var Builder $builder
              */
             $builder = $model->metaable();
-            foreach($builder->get() as $item) {
-                if($item->is_json) {
+            foreach ($builder->get() as $item) {
+                if ($item->is_json) {
                     $data->add(json_decode($item->value, true));
                 } else {
                     $data->add($item->value);
@@ -81,13 +81,13 @@ class JMetadata
         }
 
         $allowedFields = $model->allowMetadataFields();
-        if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
+        if (!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
             throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
         }
 
         $object = $model->metaableKey($key)->first();
-        if($object) {
-            if($object->is_json) {
+        if ($object) {
+            if ($object->is_json) {
                 return json_decode($object->value, true);
             } else {
                 return $object->value;
@@ -100,8 +100,8 @@ class JMetadata
     /**
      * store metadata
      *
-     * @param Model             $model
-     * @param string            $key
+     * @param Model $model
+     * @param string $key
      * @param string|array|null $value
      *
      * @return Model
@@ -109,23 +109,23 @@ class JMetadata
      */
     public function store(Model $model, string $key, string|array|null $value = null): Model
     {
-        if(!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
+        if (!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
         $allowedFields = $model->allowMetadataFields();
-        if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
+        if (!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
             throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
         }
 
         $params = [
-            'value'   => $value,
+            'value' => $value,
             'is_json' => false
         ];
 
-        if(is_array($value)) {
+        if (is_array($value)) {
             $params = [
-                'value'   => json_encode($value, JSON_UNESCAPED_UNICODE),
+                'value' => json_encode($value, JSON_UNESCAPED_UNICODE),
                 'is_json' => true
             ];
         }
@@ -140,7 +140,7 @@ class JMetadata
     /**
      * delete metadata
      *
-     * @param Model       $model
+     * @param Model $model
      * @param string|null $key
      *
      * @return void
@@ -148,15 +148,15 @@ class JMetadata
      */
     public function delete(Model $model, string|null $key = null): void
     {
-        if(!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
+        if (!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
         $builder = $model->metaable();
 
-        if(!is_null($key)) {
+        if (!is_null($key)) {
             $allowedFields = $model->allowMetadataFields();
-            if(!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
+            if (!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
                 throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
             }
 
