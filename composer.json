@@ -1,15 +1,9 @@
 {
-    "name": "jobmetric/metadata",
+    "name": "jobmetric/laravel-metadata",
     "description": "This package is for the metadata of different Laravel projects.",
     "type": "library",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Job Metric",
-            "email": "jobmetricnet@gmail.com",
-            "homepage": "https://www.linkedin.com/company/jobmetric",
-            "role": "Owner package"
-        },
         {
             "name": "Majid Mohammadian",
             "email": "majeedmohammadian@gmail.com",
@@ -25,7 +19,8 @@
     ],
     "require": {
         "php": ">=8.0.1",
-        "laravel/framework": ">=9.19"
+        "laravel/framework": ">=9.19",
+        "jobmetric/laravel-package-core": "^1.2"
     },
     "autoload": {
         "files": [
@@ -41,14 +36,14 @@
                 "JobMetric\\Metadata\\MetadataServiceProvider"
             ],
             "aliases": {
-                "JMetadata": "JobMetric\\Metadata\\Facades\\JMetadata"
+                "Metadata": "JobMetric\\Metadata\\Facades\\Metadata"
             }
         }
     },
     "minimum-stability": "stable",
     "support": {
-        "issues": "https://github.com/jobmetric/metadata/issues",
+        "issues": "https://github.com/jobmetric/laravel-metadata/issues",
         "forum": "https://twitter.com/jobmetric",
-        "source": "https://github.com/jobmetric/metadata"
+        "source": "https://github.com/jobmetric/laravel-metadata"
     }
 }
