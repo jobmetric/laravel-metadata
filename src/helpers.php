@@ -2,13 +2,13 @@
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use JobMetric\Metadata\JMetadata;
+use JobMetric\Metadata\Metadata;
 
-if(!function_exists('metadataGet')) {
+if (!function_exists('metadataGet')) {
     /**
      * Service get metadata
      *
-     * @param Model       $model
+     * @param Model $model
      * @param string|null $key
      *
      * @return Collection|Model|null
@@ -16,16 +16,16 @@ if(!function_exists('metadataGet')) {
      */
     function metadataGet(Model $model, string|null $key): Collection|Model|null
     {
-        return JMetadata::get($model, $key);
+        return Metadata::get($model, $key);
     }
 }
 
-if(!function_exists('metadataStore')) {
+if (!function_exists('metadataStore')) {
     /**
      * Service store metadata
      *
-     * @param Model             $model
-     * @param string            $key
+     * @param Model $model
+     * @param string $key
      * @param string|array|null $value
      *
      * @return Model
@@ -33,15 +33,15 @@ if(!function_exists('metadataStore')) {
      */
     function metadataStore(Model $model, string $key, string|array|null $value): Model
     {
-        return JMetadata::store($model, $key, $value);
+        return Metadata::store($model, $key, $value);
     }
 }
 
-if(!function_exists('metadataDelete')) {
+if (!function_exists('metadataDelete')) {
     /**
      * Service delete metadata
      *
-     * @param Model       $model
+     * @param Model $model
      * @param string|null $key
      *
      * @return void
@@ -49,6 +49,6 @@ if(!function_exists('metadataDelete')) {
      */
     function metadataDelete(Model $model, string|null $key = null): void
     {
-        JMetadata::delete($model, $key);
+        Metadata::delete($model, $key);
     }
 }
