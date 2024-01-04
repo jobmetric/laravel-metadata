@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('metas', function (Blueprint $table) {
+        Schema::create(config('metadata.tables.meta'), function (Blueprint $table) {
             $table->id();
 
             $table->morphs('metaable');
@@ -39,6 +39,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('metas');
+        Schema::dropIfExists(config('metadata.tables.meta'));
     }
 };
