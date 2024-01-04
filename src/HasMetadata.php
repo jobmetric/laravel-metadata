@@ -21,11 +21,9 @@ trait HasMetadata
      */
     public static function bootHasMetadata(): void
     {
-        static::retrieved(function ($model) {
-            if(!in_array('JobMetric\Metadata\MetadataInterface', class_implements($model))) {
-                throw new ModelMetadataInterfaceNotFoundException($model::class);
-            }
-        });
+        if (!in_array('JobMetric\Metadata\MetadataInterface', class_implements(self::class))) {
+            throw new ModelMetadataInterfaceNotFoundException(self::class);
+        }
     }
 
     /**
