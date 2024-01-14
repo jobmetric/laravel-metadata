@@ -80,7 +80,7 @@ class Metadata
             return $data;
         }
 
-        $allowedFields = $model->allowMetadataFields();
+        $allowedFields = $model->metadataAllowFields();
         if (!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
             throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
         }
@@ -113,7 +113,7 @@ class Metadata
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
-        $allowedFields = $model->allowMetadataFields();
+        $allowedFields = $model->metadataAllowFields();
         if (!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
             throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
         }
@@ -155,7 +155,7 @@ class Metadata
         $builder = $model->metaable();
 
         if (!is_null($key)) {
-            $allowedFields = $model->allowMetadataFields();
+            $allowedFields = $model->metadataAllowFields();
             if (!(in_array('*', $allowedFields) || in_array($key, $allowedFields))) {
                 throw new ModelMetaableKeyNotAllowedFieldException($model::class, $key);
             }
