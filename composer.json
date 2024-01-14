@@ -9,12 +9,6 @@
             "email": "majeedmohammadian@gmail.com",
             "homepage": "https://www.linkedin.com/in/majidmohammadian/",
             "role": "Full Stack Developer"
-        },
-        {
-            "name": "Alireza Mir Esmaili",
-            "email": "alirezamires@gmail.com",
-            "homepage": "https://www.linkedin.com/in/alirezamires/",
-            "role": "Full Stack Developer"
         }
     ],
     "require": {
