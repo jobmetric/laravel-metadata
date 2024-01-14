@@ -13,7 +13,7 @@ return [
     */
 
     'rule' => [
-        'exist_value' => 'The value is repetitive.'
+        'exist' => 'The :field already exists.',
     ],
 
 ];

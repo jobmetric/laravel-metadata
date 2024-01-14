@@ -42,6 +42,6 @@ class MetadataValueExistRule implements Rule
      */
     public function message(): string
     {
-        return trans('metadata::base.rule.exist_value');
+        return trans('metadata::base.rule.exist', ['field' => $this->key]);
     }
 }
