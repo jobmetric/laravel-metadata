@@ -21,7 +21,7 @@ class MetadataResource extends JsonResource
      *
      * @return array|Arrayable|JsonSerializable
      */
-    public function toArray($request): array|Arrayable|JsonSerializable
+    public function toArray(Request $request): array|Arrayable|JsonSerializable
     {
         return [
             $this->key => ($this->is_json) ? json_decode($this->value, true) : $this->value
