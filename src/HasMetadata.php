@@ -27,46 +27,17 @@ trait HasMetadata
     }
 
     /**
-     * The attributes that can be stored in the metadata table.
-     *
-     * @var array<string>
-     */
-    protected array $metadata = [];
-
-    /**
-     * set metadata field
-     *
-     * @param array $fields
-     *
-     * @return void
-     */
-    public function setMetadataFields(array $fields = []): void
-    {
-        $this->metadata = array_merge($this->metadata, $fields);
-    }
-
-    /**
-     * get metadata field
-     *
-     * @return array
-     */
-    public function getMetadataFields(): array
-    {
-        return $this->metadata;
-    }
-
-    /**
      * metaable has many relationship
      *
      * @return MorphMany
      */
-    public function metaable(): MorphMany
+    public function metas(): MorphMany
     {
         return $this->morphMany(Meta::class, 'metaable');
     }
 
     /**
-     * scope key for select metaable relationship
+     * scope key for select metas relationship
      *
      * @param string $key
      *
@@ -74,18 +45,18 @@ trait HasMetadata
      */
     public function metaableKey(string $key): MorphMany
     {
-        return $this->metaable()->where('key', $key);
+        return $this->metas()->where('key', $key);
     }
 
     /**
-     * scope has metadata
+     * scope has meta
      *
      * @param Builder $query
      * @param string $key
      *
      * @return void
      */
-    public function scopeHasMetadata(Builder $query, string $key): void
+    public function scopeHasMeta(Builder $query, string $key): void
     {
         $query->whereHas('metaable', function (Builder $q) use ($key) {
             $q->where('key', $key);
