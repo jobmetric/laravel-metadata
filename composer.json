@@ -17,9 +17,6 @@
         "jobmetric/laravel-package-core": "^1.2"
     },
     "autoload": {
-        "files": [
-            "src/helpers.php"
-        ],
         "psr-4": {
             "JobMetric\\Metadata\\": "src/"
         }
@@ -28,10 +25,7 @@
         "laravel": {
             "providers": [
                 "JobMetric\\Metadata\\MetadataServiceProvider"
-            ],
-            "aliases": {
-                "Metadata": "JobMetric\\Metadata\\Facades\\Metadata"
-            }
+            ]
         }
     },
     "minimum-stability": "stable",
