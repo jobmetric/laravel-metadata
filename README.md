@@ -27,3 +27,64 @@ composer require jobmetric/laravel-metadata
 ```
 
 ## Documentation
+
+Undergoing continuous enhancements, this package evolves each day, integrating an array of diverse features. It stands as an indispensable asset for enthusiasts of Laravel, offering a seamless way to harmonize their projects with metadata database models.
+
+In this package, you can employ it seamlessly with any model requiring database metadata.
+
+Now, let's delve into the core functionality.
+
+>#### Before doing anything, you must migrate after installing the package by composer.
+
+```bash
+php artisan migrate
+```
+
+Meet the `HasMeta` class, meticulously designed for integration into your model. This class automates essential tasks, ensuring a streamlined process for:
+
+In the first step, you need to connect this class to your main model.
+
+```php
+use JobMetric\Translation\HasMeta;
+
+class User extends Model
+{
+    use HasMeta;
+}
+```
+
+When you add this class, you will have to implement `MetaContract` to your model.
+
+```php
+use JobMetric\Metadata\Contracts\MetaContract;
+
+class User extends Model implements MetaContract
+{
+    use HasMeta;
+}
+```
+
+Now you have to use the metadataAllowFields function, and you have to add it to your model.
+
+```php
+use JobMetric\Translation\Contracts\MetaContract;
+
+class User extends Model implements MetaContract
+{
+    use HasMeta;
+
+    public function metaAllowFields(): array
+    {
+        return [
+            'first_name',
+            'last_name',
+            'bio',
+            'birthday',
+        ];
+    }
+}
+```
+
+> This function is for you to declare what translation fields you need for this model, and you should return them here as an `array`.
+
+## How is it used?
