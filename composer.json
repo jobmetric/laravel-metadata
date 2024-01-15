@@ -18,7 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "JobMetric\\Metadata\\": "src/"
+            "JobMetric\\Metadata\\": "src/",
+            "JobMetric\\Metadata\\Factories\\": "database/factories/"
         }
     },
     "extra": {
