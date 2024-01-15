@@ -58,7 +58,7 @@ class Metadata
     public function get(Model $model, string|null $key = null): mixed
     {
         // @todo config cache
-        if (!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
+        if (!in_array('JobMetric\Metadata\HasMeta', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
@@ -109,7 +109,7 @@ class Metadata
      */
     public function store(Model $model, string $key, string|array|null $value = null): Model
     {
-        if (!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
+        if (!in_array('JobMetric\Metadata\HasMeta', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 
@@ -148,7 +148,7 @@ class Metadata
      */
     public function delete(Model $model, string|null $key = null): void
     {
-        if (!in_array('JobMetric\Metadata\HasMetadata', class_uses($model))) {
+        if (!in_array('JobMetric\Metadata\HasMeta', class_uses($model))) {
             throw new ModelMetaableTraitNotFoundException($model::class);
         }
 

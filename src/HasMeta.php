@@ -16,7 +16,7 @@ use Throwable;
  * @method morphMany(string $class, string $string)
  * @method metadataAllowFields()
  */
-trait HasMetadata
+trait HasMeta
 {
     /**
      * boot has metadata
@@ -24,7 +24,7 @@ trait HasMetadata
      * @return void
      * @throws Throwable
      */
-    public static function bootHasMetadata(): void
+    public static function bootHasMeta(): void
     {
         if (!in_array('JobMetric\Metadata\Contracts\MetadataContract', class_implements(self::class))) {
             throw new ModelMetadataInterfaceNotFoundException(self::class);
