@@ -26,7 +26,7 @@ trait HasMeta
      */
     public static function bootHasMeta(): void
     {
-        if (!in_array('JobMetric\Metadata\Contracts\MetadataContract', class_implements(self::class))) {
+        if (!in_array('JobMetric\Metadata\Contracts\MetaContract', class_implements(self::class))) {
             throw new ModelMetadataInterfaceNotFoundException(self::class);
         }
     }

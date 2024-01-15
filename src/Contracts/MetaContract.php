@@ -2,7 +2,7 @@
 
 namespace JobMetric\Metadata\Contracts;
 
-interface MetadataContract
+interface MetaContract
 {
     /**
      * metadata allow fields.
