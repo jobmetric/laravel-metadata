@@ -62,4 +62,20 @@ trait HasMetadata
             $q->where('key', $key);
         });
     }
+
+    /**
+     * scope has meta value
+     *
+     * @param Builder $query
+     * @param string $key
+     * @param string $value
+     *
+     * @return void
+     */
+    public function scopeHasMetaValue(Builder $query, string $key, string $value): void
+    {
+        $query->whereHas('metaable', function (Builder $q) use ($key, $value) {
+            $q->where('key', $key)->where('value', $value);
+        });
+    }
 }
