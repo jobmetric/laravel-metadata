@@ -32,7 +32,7 @@ trait HasMeta
     }
 
     /**
-     * metaable has many relationship
+     * metaable has many relationships
      *
      * @return MorphMany
      */
