@@ -100,9 +100,13 @@ trait HasMeta
             $builder = $this->metas();
             foreach ($builder->get() as $item) {
                 if ($item->is_json) {
-                    $data->add(json_decode($item->value, true));
+                    $data->add([
+                        $item->key => json_decode($item->value, true),
+                    ]);
                 } else {
-                    $data->add($item->value);
+                    $data->add([
+                        $item->key => $item->value,
+                    ]);
                 }
             }
 

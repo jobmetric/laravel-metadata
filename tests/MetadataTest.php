@@ -137,4 +137,33 @@ class MetadataTest extends BaseTestCase
         $this->assertEquals('1234567890', $user->getMetadata('phone'));
         $this->assertEquals('123 Main St', $user->getMetadata('address'));
     }
+
+    /**
+     * @throws Throwable
+     */
+    public function testGetAll(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $user->setMeta([
+            'phone',
+            'address',
+        ]);
+
+        $user->storeMetadata('phone', '1234567890');
+        $user->storeMetadata('address', '123 Main St');
+
+        $data = collect();
+
+        $data->add([
+            'phone' => '1234567890',
+        ]);
+
+        $data->add([
+            'address' => '123 Main St',
+        ]);
+
+        $this->assertEquals($data, $user->getMetadata());
+    }
 }
