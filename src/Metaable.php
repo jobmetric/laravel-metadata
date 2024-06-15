@@ -2,6 +2,9 @@
 
 namespace JobMetric\Metadata;
 
+/**
+ * @property array meta
+ */
 trait Metaable
 {
     protected array $meta = [];
