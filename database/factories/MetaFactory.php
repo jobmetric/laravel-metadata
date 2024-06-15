@@ -61,11 +61,11 @@ class MetaFactory extends Factory
     /**
      * set value
      *
-     * @param string|array|null $value
+     * @param string|array|null|bool $value
      *
      * @return static
      */
-    public function setValue(string|array|null $value): static
+    public function setValue(string|array|null|bool $value): static
     {
         $is_json = false;
 
