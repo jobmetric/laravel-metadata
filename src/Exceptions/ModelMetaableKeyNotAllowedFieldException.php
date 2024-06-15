@@ -9,6 +9,9 @@ class ModelMetaableKeyNotAllowedFieldException extends Exception
 {
     public function __construct(string $model, string $key, int $code = 400, ?Throwable $previous = null)
     {
-        parent::__construct("Model '$model' not allowed '$key' in function 'metadataAllowFields'", $code, $previous);
+        parent::__construct(trans('metadata::base.exceptions.key_not_allowed', [
+            'model' => $model,
+            'key' => $key,
+        ]), $code, $previous);
     }
 }

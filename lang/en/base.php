@@ -16,4 +16,11 @@ return [
         'exist' => 'The :field already exists.',
     ],
 
+    'exceptions' => [
+        'key_not_found' => 'Metadata key ":key" not found!',
+        'key_not_allowed' => 'Model ":model" not allowed ":key" in function "metadataAllowFields"',
+        'trait_not_found' => 'Model ":model" not use "JobMetric\Metadata\HasMeta" Trait!',
+        'interface_not_found' => 'Model ":model" not implements "JobMetric\Metadata\Contracts\MetaContract" interface!',
+    ],
+
 ];
