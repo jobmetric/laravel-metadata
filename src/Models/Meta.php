@@ -5,6 +5,7 @@ namespace JobMetric\Metadata\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @property int id
@@ -45,5 +46,18 @@ class Meta extends Model
     public function metaable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Scope a query to only include meta by key.
+     *
+     * @param Builder $query
+     * @param string $key
+     *
+     * @return Builder
+     */
+    public function scopeOfKey(Builder $query, string $key): Builder
+    {
+        return $query->where('key', $key);
     }
 }
