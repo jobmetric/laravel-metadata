@@ -192,4 +192,16 @@ trait HasMeta
 
         return $this;
     }
+
+    /**
+     * has metadata
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasMetadata(string $key): bool
+    {
+        return $this->metaKey($key)->exists();
+    }
 }
