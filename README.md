@@ -88,3 +88,120 @@ class User extends Model implements MetaContract
 > This function is for you to declare what translation fields you need for this model, and you should return them here as an `array`.
 
 ## How is it used?
+
+### Metaable trait
+
+To make the above process easier, you can add the Metaable trait to the User class, which you can do as follows.
+
+```php
+use JobMetric\Metadata\Traits\Metaable;
+
+class User extends Model
+{
+    use Metaable;
+}
+```
+
+#### How does this trait work?
+
+### setMeta
+
+To set metadata, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$user->setMeta([
+    'phone',
+    'address'
+]);
+```
+
+### getMeta
+
+To get metadata, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$metadata = $user->getMeta();
+```
+
+> You can do this manually, this code is used when you want to write dynamic code.
+
+### Store metadata
+
+To store metadata, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$user->storeMetadata('phone', '1234567890');
+```
+
+### Forget metadata
+
+To forget metadata, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$user->forgetMetadata('phone');
+```
+
+### Forget all metadata
+
+To forget all metadata, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$user->forgetMetadata();
+```
+
+### Get metadata
+
+To get metadata, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$metadata = $user->getMetadata('phone');
+```
+
+### Get all metadata
+
+To get all metadata, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$metadata = $user->getMetadata();
+```
+
+### Has metadata
+
+To check if metadata exists, you can use the following code.
+
+```php
+$user = User::find(1);
+
+$checkMetadata = $user->hasMetadata('phone');
+```
+
+## Events
+
+This package contains several events for which you can write a listener as follows
+
+| Event                 | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| `MetadataStoredEvent` | This event is called after storing the metadata.                            |
+| `MetadataForgetEvent` | This event is called after forgetting the metadata.                         |
+
+## Contributing
+
+Thank you for considering contributing to the Laravel Metadata! The contribution guide can be found in the [CONTRIBUTING.md](https://github.com/jobmetric/laravel-metadata/blob/master/CONTRIBUTING.md).
+
+## License
+
+The MIT License (MIT). Please see [License File](https://github.com/jobmetric/laravel-metadata/blob/master/LICENCE.md) for more information.
