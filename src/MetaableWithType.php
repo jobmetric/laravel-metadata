@@ -65,6 +65,6 @@ trait MetaableWithType
      */
     public function getMeta(string $type): array
     {
-        return array_keys($this->metaType[$type]);
+        return array_keys($this->metaType[$type] ?? []);
     }
 }
