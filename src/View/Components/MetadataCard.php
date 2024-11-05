@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Throwable;
 
-class MetadataItems extends Component
+class MetadataCard extends Component
 {
     /**
      * Create a new component instance.
@@ -26,7 +26,7 @@ class MetadataItems extends Component
      */
     public function render(): View|Closure|string
     {
-        return $this->view('metadata::components.metadata-items');
+        return $this->view('metadata::components.metadata-card');
     }
 
 }

@@ -3,7 +3,7 @@
 namespace JobMetric\Metadata;
 
 use Illuminate\Support\Facades\Blade;
-use JobMetric\Metadata\View\Components\MetadataItems;
+use JobMetric\Metadata\View\Components\MetadataCard;
 use JobMetric\PackageCore\Exceptions\MigrationFolderNotFoundException;
 use JobMetric\PackageCore\Exceptions\ViewFolderNotFoundException;
 use JobMetric\PackageCore\PackageCore;
@@ -32,6 +32,6 @@ class MetadataServiceProvider extends PackageCoreServiceProvider
     public function afterBootPackage(): void
     {
         // add alias for components
-        Blade::component(MetadataItems::class, 'metadata-items');
+        Blade::component(MetadataCard::class, 'metadata-card');
     }
 }

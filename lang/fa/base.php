@@ -24,7 +24,7 @@ return [
     ],
 
     "components" => [
-        'metadata_items' => [
+        'metadata_card' => [
             'title' => 'اطلاعات اضافی',
         ],
     ],

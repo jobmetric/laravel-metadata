@@ -2,7 +2,7 @@
 <div class="card card-flush py-4 mb-10">
     <div class="card-header">
         <div class="card-title">
-            <span class="fs-5 fw-bold">{{ trans('metadata::base.components.metadata_items.title') }}</span>
+            <span class="fs-5 fw-bold">{{ trans('metadata::base.components.metadata_card.title') }}</span>
         </div>
     </div>
     <div class="card-body">
