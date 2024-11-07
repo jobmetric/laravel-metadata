@@ -13,6 +13,12 @@ use JobMetric\Metadata\Models\Meta;
 use Throwable;
 
 /**
+ * Trait HasMeta
+ *
+ * @package JobMetric\Metadata
+ *
+ * @property Meta[] metas
+ *
  * @method morphMany(string $class, string $string)
  * @method metadataAllowFields()
  */
@@ -203,5 +209,20 @@ trait HasMeta
     public function hasMetadata(string $key): bool
     {
         return $this->metaKey($key)->exists();
+    }
+
+    /**
+     * Get the metadata data for the object
+     *
+     * @return array
+     */
+    public function getMetaDataForObject(): array
+    {
+        $data = [];
+        foreach ($this->metas as $item) {
+            $data[$item->key] = $item->value;
+        }
+
+        return $data;
     }
 }
