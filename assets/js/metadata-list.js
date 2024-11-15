@@ -1,7 +1,7 @@
 function datatableShowDetailsMetadata(data) {
     let html = ``
 
-    html += `<div class="col-12 col-md-4">
+    html += `<div class="col-12 col-md-4 mt-3">
                 <div class="card card-flush h-xl-100">
                     <div class="card-header pt-7">
                         <h3 class="card-title align-items-start flex-column">
