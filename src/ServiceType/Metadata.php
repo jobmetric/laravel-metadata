@@ -7,7 +7,7 @@ use JobMetric\CustomField\CustomField;
 /**
  * Class Metadata
  *
- * @package JobMetric\Metadata\Metadata
+ * @package JobMetric\Metadata\ServiceType
  */
 class Metadata
 {
