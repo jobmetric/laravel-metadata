@@ -3,13 +3,13 @@
 namespace JobMetric\Metadata;
 
 use Closure;
-use JobMetric\Metadata\Metadata\MetadataBuilder;
+use JobMetric\Metadata\ServiceType\MetadataBuilder;
 use Throwable;
 
 /**
- * Trait HierarchicalServiceType
+ * Trait MetadataServiceType
  *
- * @package JobMetric\PackageCore
+ * @package JobMetric\Metadata
  */
 trait MetadataServiceType
 {
@@ -30,11 +30,11 @@ trait MetadataServiceType
      */
     public function metadata(Closure|array $callable): static
     {
-        if($callable instanceof Closure){
+        if ($callable instanceof Closure) {
             $callable($builder = new MetadataBuilder);
 
             $this->metadata[] = $builder->build();
-        }else{
+        } else {
             foreach ($callable as $metadata) {
                 $builder = new MetadataBuilder;
 
@@ -51,5 +51,15 @@ trait MetadataServiceType
         $this->setTypeParam('metadata', $this->metadata);
 
         return $this;
+    }
+
+    /**
+     * Get metadata.
+     *
+     * @return array
+     */
+    public function getMetadata(): array
+    {
+        return $this->getTypeParam('metadata', []);
     }
 }

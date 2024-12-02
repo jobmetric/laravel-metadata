@@ -1,6 +1,6 @@
 <?php
 
-namespace JobMetric\Metadata\Metadata;
+namespace JobMetric\Metadata\ServiceType;
 
 use JobMetric\CustomField\CustomField;
 
