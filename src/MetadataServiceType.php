@@ -3,6 +3,8 @@
 namespace JobMetric\Metadata;
 
 use Closure;
+use Illuminate\Support\Collection;
+use JobMetric\Metadata\ServiceType\Metadata;
 use JobMetric\Metadata\ServiceType\MetadataBuilder;
 use Throwable;
 
@@ -56,10 +58,10 @@ trait MetadataServiceType
     /**
      * Get metadata.
      *
-     * @return array
+     * @return Collection
      */
-    public function getMetadata(): array
+    public function getMetadata(): Collection
     {
-        return $this->getTypeParam('metadata', []);
+        return collect($this->getTypeParam('metadata', []));
     }
 }
