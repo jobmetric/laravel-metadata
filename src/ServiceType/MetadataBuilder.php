@@ -25,14 +25,14 @@ class MetadataBuilder
      *
      * @var CustomField|null $customField
      */
-    public ?CustomField $customField = null;
+    protected ?CustomField $customField = null;
 
     /**
      * The has filter status.
      *
      * @var bool $hasFilter
      */
-    public bool $hasFilter = false;
+    protected bool $hasFilter = false;
 
     /**
      * Set custom field.
