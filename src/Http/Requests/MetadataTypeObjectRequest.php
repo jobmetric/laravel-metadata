@@ -2,18 +2,40 @@
 
 namespace JobMetric\Metadata\Http\Requests;
 
+use Illuminate\Support\Collection;
+use JobMetric\Metadata\ServiceType\Metadata;
+
 trait MetadataTypeObjectRequest
 {
     public function renderMetadataFiled(
-        array &$rules,
-        array $object_type,
+        array      &$rules,
+        Collection $metadata,
     ): void
     {
-        if (isset($object_type['metadata'])) {
-            $rules['metadata'] = 'array|sometimes';
-            foreach ($object_type['metadata'] as $metadata_key => $metadata_value) {
-                $rules['metadata.' . $metadata_key] = $metadata_value['validation'] ?? 'string|nullable|sometimes';
-            }
+        $rules['metadata'] = 'array|sometimes';
+
+        foreach ($metadata as $item) {
+            /**
+             * @var Metadata $item
+             */
+            $uniqName = $item->customField->params['uniqName'] ?? null;
+
+            $rules['metadata.' . $uniqName] = $item->customField->validation ?? 'string|nullable|sometimes';
+        }
+    }
+
+    public function renderMetadataAttribute(
+        array      &$params,
+        Collection $metadata
+    ): void
+    {
+        foreach ($metadata as $item) {
+            /**
+             * @var Metadata $item
+             */
+            $uniqName = $item->customField->params['uniqName'];
+
+            $params["metadata.$uniqName"] = trans($item->customField->label);
         }
     }
 }
