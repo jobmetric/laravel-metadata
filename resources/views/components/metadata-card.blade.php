@@ -6,7 +6,16 @@
         </div>
     </div>
     <div class="card-body">
-        @foreach($items as $metadata_key => $metadata_value)
+        @foreach($items as $meta)
+            @php
+                /**
+                 * @var \JobMetric\Metadata\ServiceType\Metadata $meta
+                 */
+            @endphp
+            {!! $meta->customField->render(hasErrorTagForm: true) !!}
+        @endforeach
+
+        {{--@foreach($items as $metadata_key => $metadata_value)
             <div class="mb-10">
                 <label class="form-label d-flex justify-content-between align-items-center">
                     <span>{{ trans($metadata_value['label']) }}</span>
@@ -27,7 +36,7 @@
                     <div class="form-errors text-danger fs-7 mt-2">{{ $message }}</div>
                 @enderror
             </div>
-        @endforeach
+        @endforeach--}}
     </div>
 </div>
 <!--end::Metadata-->
