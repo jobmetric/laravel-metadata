@@ -14,7 +14,7 @@
     "require": {
         "php": ">=8.0.1",
         "laravel/framework": ">=9.19",
-        "jobmetric/laravel-package-core": "^1.2",
+        "jobmetric/laravel-package-core": "^1.18.5",
         "jobmetric/laravel-custom-field": "^1.7"
     },
     "autoload": {
