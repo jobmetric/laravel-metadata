@@ -35,7 +35,7 @@ trait MetadataServiceType
         if ($callable instanceof Closure) {
             $callable($builder = new MetadataBuilder);
 
-            $this->metadata[] = $builder->build();
+            $this->metadata[$this->type][] = $builder->build();
         } else {
             foreach ($callable as $metadata) {
                 $builder = new MetadataBuilder;
@@ -46,7 +46,7 @@ trait MetadataServiceType
                     $builder->hasFilter();
                 }
 
-                $this->metadata[] = $builder->build();
+                $this->metadata[$this->type][] = $builder->build();
             }
         }
 
@@ -62,6 +62,8 @@ trait MetadataServiceType
      */
     public function getMetadata(): Collection
     {
-        return collect($this->getTypeParam('metadata', []));
+        $metadata = $this->getTypeParam('metadata', []);
+
+        return collect($metadata[$this->type] ?? []);
     }
 }
