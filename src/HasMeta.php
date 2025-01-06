@@ -12,7 +12,6 @@ use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
 use JobMetric\Metadata\Exceptions\ModelMetaableKeyNotAllowedFieldException;
 use JobMetric\Metadata\Exceptions\ModelMetadataInterfaceNotFoundException;
 use JobMetric\Metadata\Models\Meta;
-use JobMetric\Taxonomy\Models\Taxonomy;
 use Throwable;
 
 /**
@@ -56,7 +55,6 @@ trait HasMeta
         }
 
         $checkerClosure = function (Model $model) {
-            if ($model::class == Taxonomy::class) {
                 if (isset($model->attributes['metadata'])) {
                     $keys = array_keys($model->attributes['metadata']);
                     if (!empty($fieldsThatAreNotExistsInAllowedFields = array_diff($keys, $model->metadataAllowFields()))) {
@@ -66,7 +64,6 @@ trait HasMeta
                     $model->innerMeta = $model->attributes['metadata'];
                     unset($model->attributes['metadata']);
                 }
-            }
         };
 
         static::creating($checkerClosure);
