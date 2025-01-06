@@ -3,13 +3,16 @@
 namespace JobMetric\Metadata;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use JobMetric\Metadata\Events\MetadataForgetEvent;
 use JobMetric\Metadata\Events\MetadataStoredEvent;
 use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
 use JobMetric\Metadata\Exceptions\ModelMetaableKeyNotAllowedFieldException;
 use JobMetric\Metadata\Exceptions\ModelMetadataInterfaceNotFoundException;
 use JobMetric\Metadata\Models\Meta;
+use JobMetric\Taxonomy\Models\Taxonomy;
 use Throwable;
 
 /**
@@ -18,12 +21,28 @@ use Throwable;
  * @package JobMetric\Metadata
  *
  * @property Meta[] metas
- *
+ * @property array $metadata
  * @method morphMany(string $class, string $string)
  * @method metadataAllowFields()
  */
 trait HasMeta
 {
+
+    /**
+     * this field temporally holds the meta that passed to model
+     * @var array
+     */
+    private array $innerMeta = [];
+
+    /**
+     * this method will add meta key to fillable of model when constructor invokes
+     * @return void
+     */
+    public function HasMeta(): void
+    {
+        /** @var Model $this */
+        $this->mergeFillable(['metadata']);
+    }
     /**
      * boot has metadata
      *
@@ -35,6 +54,49 @@ trait HasMeta
         if (!in_array('JobMetric\Metadata\Contracts\MetaContract', class_implements(self::class))) {
             throw new ModelMetadataInterfaceNotFoundException(self::class);
         }
+
+        $checkerClosure = function (Model $model) {
+            if ($model::class == Taxonomy::class) {
+                if (isset($model->attributes['metadata'])) {
+                    $keys = array_keys($model->attributes['metadata']);
+                    if (!empty($fieldsThatAreNotExistsInAllowedFields = array_diff($keys, $model->metadataAllowFields()))) {
+                        throw new MetadataKeyNotFoundException($fieldsThatAreNotExistsInAllowedFields);
+                    }
+
+                    $model->innerMeta = $model->attributes['metadata'];
+                    unset($model->attributes['metadata']);
+                }
+            }
+        };
+
+        static::creating($checkerClosure);
+        static::updating($checkerClosure);
+        static::saving($checkerClosure);
+
+        $savingAndUpdatingClosure = function ($model) {
+            foreach ($model->innerMeta as $metaKey => $metaValue) {
+                $model->storeMetadata($metaKey, $metaValue);
+            }
+
+            $model->innerMeta = [];
+        };
+
+        static::created($savingAndUpdatingClosure);
+        static::updated($savingAndUpdatingClosure);
+        static::saved($savingAndUpdatingClosure);
+
+        static::deleted(function ($model) {
+            if (!in_array(SoftDeletes::class, class_uses_recursive($model))) { // means the model doesn't have soft delete and we must 
+                $model->metas()->delete();
+            }
+        });
+
+        if (method_exists(static::class, "forceDeleted")) {
+            static::forceDeleted(function ($model) {
+                $model->metas()->delete();
+            });
+        }
+
     }
 
     /**
