@@ -1,13 +1,13 @@
 <?php
 
-namespace JobMetric\Metadata\ServiceType;
+namespace JobMetric\Metadata\Typeify;
 
 use JobMetric\CustomField\CustomField;
 
 /**
  * Class Metadata
  *
- * @package JobMetric\Metadata\ServiceType
+ * @package JobMetric\Metadata\BaseType
  */
 class Metadata
 {

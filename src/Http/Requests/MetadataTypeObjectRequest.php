@@ -3,7 +3,7 @@
 namespace JobMetric\Metadata\Http\Requests;
 
 use Illuminate\Support\Collection;
-use JobMetric\Metadata\ServiceType\Metadata;
+use JobMetric\Metadata\Typeify\Metadata;
 
 trait MetadataTypeObjectRequest
 {

@@ -9,7 +9,7 @@
         @foreach($items as $meta)
             @php
                 /**
-                 * @var \JobMetric\Metadata\ServiceType\Metadata $meta
+                 * @var \JobMetric\Metadata\Typeify\Metadata $meta
                  */
             @endphp
             {!! $meta->customField->render($values[$meta->customField->params['uniqName']], hasErrorTagForm: true) !!}

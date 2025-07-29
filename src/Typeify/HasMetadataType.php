@@ -1,19 +1,17 @@
 <?php
 
-namespace JobMetric\Metadata;
+namespace JobMetric\Metadata\Typeify;
 
 use Closure;
 use Illuminate\Support\Collection;
-use JobMetric\Metadata\ServiceType\Metadata;
-use JobMetric\Metadata\ServiceType\MetadataBuilder;
 use Throwable;
 
 /**
- * Trait MetadataServiceType
+ * Trait HasMetadataType
  *
  * @package JobMetric\Metadata
  */
-trait MetadataServiceType
+trait HasMetadataType
 {
     /**
      * The metadata custom fields
