@@ -2,6 +2,7 @@
 
 namespace JobMetric\Metadata\Tests\Stubs\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use JobMetric\Metadata\Contracts\MetaContract;
 use JobMetric\Metadata\HasMeta;
@@ -15,7 +16,7 @@ use JobMetric\Metadata\HasMeta;
  */
 class Article extends Model implements MetaContract
 {
-    use HasMeta;
+    use HasFactory, HasMeta;
 
     public $timestamps = false;
     protected $fillable = [
