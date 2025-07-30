@@ -1,6 +1,6 @@
 <?php
 
-namespace JobMetric\Metadata\Tests\database\factories;
+namespace JobMetric\Metadata\Tests\Stubs\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use JobMetric\Metadata\Tests\Stubs\Models\Article;

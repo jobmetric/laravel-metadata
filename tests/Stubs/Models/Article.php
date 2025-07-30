@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use JobMetric\Metadata\Contracts\MetaContract;
 use JobMetric\Metadata\HasMeta;
+use JobMetric\Metadata\Metaable;
+use JobMetric\Metadata\Tests\Stubs\Factories\ArticleFactory;
 
 /**
  * @property int $id
@@ -16,7 +18,7 @@ use JobMetric\Metadata\HasMeta;
  */
 class Article extends Model implements MetaContract
 {
-    use HasFactory, HasMeta;
+    use HasFactory, HasMeta, Metaable;
 
     public $timestamps = false;
     protected $fillable = [
@@ -28,11 +30,8 @@ class Article extends Model implements MetaContract
         'status' => 'string',
     ];
 
-    public function metadataAllowFields(): array
+    protected static function newFactory(): ArticleFactory
     {
-        return [
-            'description',
-            'info'
-        ];
+        return ArticleFactory::new();
     }
 }
