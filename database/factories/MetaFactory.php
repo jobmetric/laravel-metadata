@@ -20,8 +20,8 @@ class MetaFactory extends Factory
     public function definition(): array
     {
         return [
-            'metaable_id' => null,
             'metaable_type' => null,
+            'metaable_id' => null,
             'key' => $this->faker->word,
             'value' => $this->faker->word,
             'is_json' => false
@@ -31,16 +31,16 @@ class MetaFactory extends Factory
     /**
      * set metaable
      *
-     * @param int $metaable_id
      * @param string $metaable_type
+     * @param int $metaable_id
      *
      * @return static
      */
-    public function setMetaable(int $metaable_id, string $metaable_type): static
+    public function setMetaable(string $metaable_type, int $metaable_id): static
     {
         return $this->state(fn(array $attributes) => [
-            'metaable_id' => $metaable_id,
             'metaable_type' => $metaable_type,
+            'metaable_id' => $metaable_id,
         ]);
     }
 
@@ -61,15 +61,15 @@ class MetaFactory extends Factory
     /**
      * set value
      *
-     * @param string|array|null|bool $value
+     * @param string|array|bool|null $value
      *
      * @return static
      */
-    public function setValue(string|array|null|bool $value): static
+    public function setValue(string|array|bool|null $value): static
     {
         $is_json = false;
 
-        if(is_array($value)) {
+        if (is_array($value)) {
             $value = json_encode($value);
             $is_json = true;
         }
