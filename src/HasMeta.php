@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use JobMetric\Metadata\Contracts\MetaContract;
 use JobMetric\Metadata\Events\MetadataForgetEvent;
 use JobMetric\Metadata\Events\MetadataStoredEvent;
 use JobMetric\Metadata\Exceptions\MetadataKeyNotFoundException;
@@ -42,6 +43,7 @@ trait HasMeta
         /** @var Model $this */
         $this->mergeFillable(['metadata']);
     }
+
     /**
      * boot has metadata
      *
@@ -50,20 +52,20 @@ trait HasMeta
      */
     public static function bootHasMeta(): void
     {
-        if (!in_array('JobMetric\Metadata\Contracts\MetaContract', class_implements(self::class))) {
-            throw new ModelMetadataInterfaceNotFoundException(self::class);
+        if (!is_subclass_of(static::class, MetaContract::class)) {
+            throw new ModelMetadataInterfaceNotFoundException(static::class);
         }
 
         $checkerClosure = function (Model $model) {
-                if (isset($model->attributes['metadata'])) {
-                    $keys = array_keys($model->attributes['metadata']);
-                    if (!empty($fieldsThatAreNotExistsInAllowedFields = array_diff($keys, $model->metadataAllowFields()))) {
-                        throw new MetadataKeyNotFoundException($fieldsThatAreNotExistsInAllowedFields);
-                    }
-
-                    $model->innerMeta = $model->attributes['metadata'];
-                    unset($model->attributes['metadata']);
+            if (isset($model->attributes['metadata'])) {
+                $keys = array_keys($model->attributes['metadata']);
+                if (!empty($fieldsThatAreNotExistsInAllowedFields = array_diff($keys, $model->metadataAllowFields()))) {
+                    throw new MetadataKeyNotFoundException($fieldsThatAreNotExistsInAllowedFields);
                 }
+
+                $model->innerMeta = $model->attributes['metadata'];
+                unset($model->attributes['metadata']);
+            }
         };
 
         static::creating($checkerClosure);
@@ -83,7 +85,7 @@ trait HasMeta
         static::saved($savingAndUpdatingClosure);
 
         static::deleted(function ($model) {
-            if (!in_array(SoftDeletes::class, class_uses_recursive($model))) { // means the model doesn't have soft delete and we must 
+            if (!in_array(SoftDeletes::class, class_uses_recursive($model))) { // means the model doesn't have soft delete and we must
                 $model->metas()->delete();
             }
         });
@@ -128,7 +130,7 @@ trait HasMeta
      */
     public function scopeHasMeta(Builder $query, string $key): void
     {
-        $query->whereHas('metaable', function (Builder $q) use ($key) {
+        $query->whereHas('metas', function (Builder $q) use ($key) {
             $q->where('key', $key);
         });
     }
@@ -144,7 +146,7 @@ trait HasMeta
      */
     public function scopeHasMetaValue(Builder $query, string $key, string $value): void
     {
-        $query->whereHas('metaable', function (Builder $q) use ($key, $value) {
+        $query->whereHas('metas', function (Builder $q) use ($key, $value) {
             $q->where('key', $key)->where('value', $value);
         });
     }
