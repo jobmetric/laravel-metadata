@@ -28,15 +28,10 @@ class Article extends Model
         'status' => 'string',
     ];
 
-    protected array $metadata = [
+    /*protected array $metadata = [
         'phone',
         'address',
-    ];
-
-    protected array $metadata_casts = [
-        'title' => 'string',
-        'status' => 'string',
-    ];
+    ];*/
 
     protected static function newFactory(): ArticleFactory
     {
