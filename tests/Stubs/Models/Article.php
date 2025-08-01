@@ -4,9 +4,7 @@ namespace JobMetric\Metadata\Tests\Stubs\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use JobMetric\Metadata\Contracts\MetaContract;
 use JobMetric\Metadata\HasMeta;
-use JobMetric\Metadata\Metaable;
 use JobMetric\Metadata\Tests\Stubs\Factories\ArticleFactory;
 
 /**
@@ -16,9 +14,9 @@ use JobMetric\Metadata\Tests\Stubs\Factories\ArticleFactory;
  *
  * @method static create(string[] $array)
  */
-class Article extends Model implements MetaContract
+class Article extends Model
 {
-    use HasFactory, HasMeta, Metaable;
+    use HasFactory, HasMeta;
 
     public $timestamps = false;
     protected $fillable = [
@@ -26,6 +24,16 @@ class Article extends Model implements MetaContract
         'status'
     ];
     protected $casts = [
+        'title' => 'string',
+        'status' => 'string',
+    ];
+
+    protected array $metadata = [
+        'phone',
+        'address',
+    ];
+
+    protected array $metadata_casts = [
         'title' => 'string',
         'status' => 'string',
     ];

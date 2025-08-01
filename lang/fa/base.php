@@ -20,7 +20,6 @@ return [
         "key_not_found" => "کلید متادیتا ':key' یافت نشد!",
         "key_not_allowed" => "مدل ':model' در تابع 'metadataAllowFields' ':key' را مجاز نمی داند",
         "trait_not_found" => "مدل ':model' از 'JobMetric\Metadata\HasMeta' Trait استفاده نمی کند!",
-        "interface_not_found" => "مدل ':model' از 'JobMetric\Metadata\Contracts\MetaContract' interface پیروی نمی کند!",
     ],
 
     "components" => [
