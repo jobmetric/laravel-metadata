@@ -22,6 +22,7 @@ class ArticleFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'status' => $this->faker->randomElement(['draft', 'published', 'archived']),
+            'metadata' => [],
         ];
     }
 
@@ -50,6 +51,20 @@ class ArticleFactory extends Factory
     {
         return $this->state(fn(array $attributes) => [
             'status' => $status,
+        ]);
+    }
+
+    /**
+     * set metadata
+     *
+     * @param array $metadata
+     *
+     * @return static
+     */
+    public function setMetadata(array $metadata): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'metadata' => $metadata,
         ]);
     }
 }
