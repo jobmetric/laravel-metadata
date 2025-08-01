@@ -15,37 +15,36 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-# Metadata for laravel
+# Metadata for Laravel
 
-This package is for the metadata of different Laravel projects.
+This package is designed to manage metadata in Laravel projects.
 
-## Install via composer
+## Install via Composer
 
-Run the following command to pull in the latest version:
 ```bash
 composer require jobmetric/laravel-metadata
 ```
 
 ## Documentation
 
-Undergoing continuous enhancements, this package evolves each day, integrating an array of diverse features. It stands as an indispensable asset for enthusiasts of Laravel, offering a seamless way to harmonize their projects with metadata database models.
+This package offers a robust and flexible metadata system for Laravel Eloquent models, enabling you to attach dynamic key-value data through a `morphMany` relationship. It supports full control over metadata keys, validation, events, and batch operations.
 
-In this package, you can employ it seamlessly with any model requiring database metadata.
+### Migrate database
 
-Now, let's delve into the core functionality.
-
->#### Before doing anything, you must migrate after installing the package by composer.
+Before using the package, run:
 
 ```bash
 php artisan migrate
 ```
 
-Meet the `HasMeta` class, meticulously designed for integration into your model. This class automates essential tasks, ensuring a streamlined process for:
+## How to use
 
-In the first step, you need to connect this class to your main model.
+### Attach Trait to Model
+
+Add the `HasMeta` trait to your model:
 
 ```php
-use JobMetric\Translation\HasMeta;
+use JobMetric\Metadata\HasMeta;
 
 class User extends Model
 {
@@ -53,155 +52,110 @@ class User extends Model
 }
 ```
 
-When you add this class, you will have to implement `MetaContract` to your model.
+### Optional: Limit Allowed Metadata Keys
+
+To restrict metadata keys, define a `protected array $metadata = [...]` in your model:
 
 ```php
-use JobMetric\Metadata\Contracts\MetaContract;
-
-class User extends Model implements MetaContract
-{
-    use HasMeta;
-}
-```
-
-Now you have to use the metadataAllowFields function, and you have to add it to your model.
-
-```php
-use JobMetric\Translation\Contracts\MetaContract;
-
-class User extends Model implements MetaContract
-{
-    use HasMeta;
-
-    public function metaAllowFields(): array
-    {
-        return [
-            'first_name',
-            'last_name',
-            'bio',
-            'birthday',
-        ];
-    }
-}
-```
-
-> This function is for you to declare what translation fields you need for this model, and you should return them here as an `array`.
-
-## How is it used?
-
-### Metaable trait
-
-To make the above process easier, you can add the Metaable trait to the User class, which you can do as follows.
-
-```php
-use JobMetric\Metadata\Traits\Metaable;
-
 class User extends Model
 {
-    use Metaable;
+    use HasMeta;
+
+    protected array $metadata = [
+        'first_name',
+        'last_name',
+        'bio',
+        'birthday',
+    ];
 }
 ```
 
-#### How does this trait work?
+If omitted or set as `['*']`, all keys are allowed.
 
-### setMeta
-
-To set metadata, you can use the following code.
-
-```php
-$user = User::find(1);
-
-$user->setMeta([
-    'phone',
-    'address'
-]);
-```
-
-### getMeta
-
-To get metadata, you can use the following code.
-
-```php
-$user = User::find(1);
-
-$metadata = $user->getMeta();
-```
-
-> You can do this manually, this code is used when you want to write dynamic code.
+## API Usage
 
 ### Store metadata
 
-To store metadata, you can use the following code.
-
 ```php
 $user = User::find(1);
-
 $user->storeMetadata('phone', '1234567890');
 ```
 
-### Forget metadata
-
-To forget metadata, you can use the following code.
+### Store multiple metadata
 
 ```php
-$user = User::find(1);
+$user->storeMetadataBatch([
+    'phone' => '1234567890',
+    'address' => '123 Main St',
+]);
+```
 
+### Retrieve a metadata value
+
+```php
+$phone = $user->getMetadata('phone');
+```
+
+### Retrieve all metadata
+
+```php
+$allMetadata = $user->getMetadata();
+```
+
+### Check if metadata exists
+
+```php
+$hasPhone = $user->hasMetadata('phone');
+```
+
+### Delete specific metadata
+
+```php
 $user->forgetMetadata('phone');
 ```
 
-### Forget all metadata
-
-To forget all metadata, you can use the following code.
+### Delete all metadata
 
 ```php
-$user = User::find(1);
-
 $user->forgetMetadata();
 ```
 
-### Get metadata
-
-To get metadata, you can use the following code.
+### Allow additional metadata keys at runtime
 
 ```php
-$user = User::find(1);
-
-$metadata = $user->getMetadata('phone');
+$user->mergeMeta(['nickname', 'website']);
 ```
 
-### Get all metadata
-
-To get all metadata, you can use the following code.
+### Remove allowed metadata key
 
 ```php
-$user = User::find(1);
-
-$metadata = $user->getMetadata();
-```
-
-### Has metadata
-
-To check if metadata exists, you can use the following code.
-
-```php
-$user = User::find(1);
-
-$checkMetadata = $user->hasMetadata('phone');
+$user->removeMetaKey('bio');
 ```
 
 ## Events
 
-This package contains several events for which you can write a listener as follows
+This package includes events for metadata operations:
 
-| Event                 | Description                                                                 |
-|-----------------------|-----------------------------------------------------------------------------|
-| `MetadataStoredEvent` | This event is called after storing the metadata.                            |
-| `MetadataForgetEvent` | This event is called after forgetting the metadata.                         |
+| Event                   | Description                |
+|-------------------------|----------------------------|
+| `MetadataStoringEvent`  | Before metadata is stored  |
+| `MetadataStoredEvent`   | After metadata is stored   |
+| `MetadataDeletingEvent` | Before metadata is deleted |
+| `MetadataDeletedEvent`  | After metadata is deleted  |
+
+You may listen to these events to customize your logic.
+
+## Advanced Notes
+
+- If you define `$metadata` in the model, it overrides the default `['*']`.
+- During model `saving`, metadata is validated against allowed keys.
+- You can interact with the `metas()` relationship directly for advanced queries.
+- All metadata values that are arrays are stored as JSON in the DB.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel Metadata! The contribution guide can be found in the [CONTRIBUTING.md](https://github.com/jobmetric/laravel-metadata/blob/master/CONTRIBUTING.md).
+Thank you for considering contributing to Laravel Metadata! See the [CONTRIBUTING.md](https://github.com/jobmetric/laravel-metadata/blob/master/CONTRIBUTING.md) for details.
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/jobmetric/laravel-metadata/blob/master/LICENCE.md) for more information.
+The MIT License (MIT). See the [License File](https://github.com/jobmetric/laravel-metadata/blob/master/LICENCE.md) for details.
