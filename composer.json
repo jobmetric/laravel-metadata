@@ -14,8 +14,13 @@
     "require": {
         "php": ">=8.0.1",
         "laravel/framework": ">=9.19",
-        "jobmetric/laravel-package-core": "^1.18.5",
+        "jobmetric/laravel-package-core": "^1.22",
         "jobmetric/laravel-custom-field": "^1.7"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4.4",
+        "orchestra/testbench": "^8.36",
+        "phpunit/phpunit": "^10.1"
     },
     "autoload": {
         "psr-4": {
