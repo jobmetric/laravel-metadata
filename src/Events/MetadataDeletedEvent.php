@@ -2,20 +2,17 @@
 
 namespace JobMetric\Metadata\Events;
 
-use Illuminate\Database\Eloquent\Model;
 use JobMetric\Metadata\Models\Meta;
 
-class MetadataStoredEvent
+class MetadataDeletedEvent
 {
-    public Model $model;
     public Meta $meta;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Model $model, Meta $meta)
+    public function __construct(Meta $meta)
     {
-        $this->model = $model;
         $this->meta = $meta;
     }
 }
