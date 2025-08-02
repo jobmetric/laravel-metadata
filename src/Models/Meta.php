@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * Class Meta
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $key The name of the metadata key.
  * @property mixed $value The associated metadata value.
  * @property boolean $is_json Whether the value is stored as JSON.
+ * @property Carbon $created_at The timestamp when this metadata was created.
+ * @property Carbon $updated_at The timestamp when this metadata was last updated.
  *
  * @property-read Model|MorphTo $metaable The related Eloquent model.
  *
@@ -52,7 +55,7 @@ class Meta extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
