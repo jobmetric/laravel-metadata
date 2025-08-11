@@ -19,13 +19,6 @@ return [
     "exceptions" => [
         "key_not_found" => "Metadata key ':key' not found!",
         "key_not_allowed" => "Model ':model' not allowed ':key' in function 'metadataAllowFields'",
-        "trait_not_found" => "Model ':model' not use 'JobMetric\Metadata\HasMeta' Trait!",
-    ],
-
-    "components" => [
-        'metadata_card' => [
-            'title' => 'Additional Information',
-        ],
     ],
 
 ];
