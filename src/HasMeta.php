@@ -94,12 +94,12 @@ trait HasMeta
         static::saved($savingAndUpdatingClosure);
 
         static::deleted(function ($model) {
-            if (!in_array(SoftDeletes::class, class_uses_recursive($model))) {
+            if (!is_subclass_of($model, SoftDeletes::class)) {
                 $model->metas()->delete();
             }
         });
 
-        if (in_array(SoftDeletes::class, class_uses_recursive(static::class))) {
+        if (is_subclass_of(static::class, SoftDeletes::class)) {
             static::deleted(function ($model) {
                 $model->metas()->delete();
             });
