@@ -15,7 +15,7 @@
         "php": ">=8.0.1",
         "laravel/framework": ">=9.19",
         "jobmetric/laravel-package-core": "^1.22",
-        "jobmetric/laravel-custom-field": "^1.7"
+        "jobmetric/laravel-custom-field": "^1.11"
     },
     "require-dev": {
         "mockery/mockery": "^1.4.4",
