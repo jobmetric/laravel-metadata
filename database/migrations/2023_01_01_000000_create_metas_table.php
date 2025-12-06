@@ -47,7 +47,7 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            $table->index([
+            $table->unique([
                 'metaable_type',
                 'metaable_id',
                 'key'
