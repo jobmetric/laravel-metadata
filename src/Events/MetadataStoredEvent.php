@@ -35,7 +35,7 @@ readonly class MetadataStoredEvent implements DomainEvent
      */
     public static function definition(): DomainEventDefinition
     {
-        return new DomainEventDefinition(self::key(), 'metadata::base.events.metadata_stored.group', 'metadata::base.events.metadata_stored.title', 'metadata::base.events.metadata_stored.description', 'fas fa-save', [
+        return new DomainEventDefinition(self::key(), 'metadata::base.entity_names.metadata', 'metadata::base.events.metadata_stored.title', 'metadata::base.events.metadata_stored.description', 'fas fa-save', [
             'metadata',
             'storage',
             'management',

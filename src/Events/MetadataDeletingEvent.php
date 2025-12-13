@@ -33,7 +33,7 @@ readonly class MetadataDeletingEvent implements DomainEvent
      */
     public static function definition(): DomainEventDefinition
     {
-        return new DomainEventDefinition(self::key(), 'metadata::base.events.metadata_deleting.group', 'metadata::base.events.metadata_deleting.title', 'metadata::base.events.metadata_deleting.description', 'fas fa-trash', [
+        return new DomainEventDefinition(self::key(), 'metadata::base.entity_names.metadata', 'metadata::base.events.metadata_deleting.title', 'metadata::base.events.metadata_deleting.description', 'fas fa-trash', [
             'metadata',
             'deletion',
             'management',
