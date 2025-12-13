@@ -3,19 +3,42 @@
 namespace JobMetric\Metadata\Events;
 
 use Illuminate\Database\Eloquent\Model;
+use JobMetric\EventSystem\Contracts\DomainEvent;
+use JobMetric\EventSystem\Support\DomainEventDefinition;
 use JobMetric\Metadata\Models\Meta;
 
-class MetadataStoredEvent
+readonly class MetadataStoredEvent implements DomainEvent
 {
-    public Model $model;
-    public Meta $meta;
-
     /**
      * Create a new event instance.
      */
-    public function __construct(Model $model, Meta $meta)
+    public function __construct(
+        public Model $model,
+        public Meta $meta
+    ) {
+    }
+
+    /**
+     * Returns the stable technical key for the domain event.
+     *
+     * @return string
+     */
+    public static function key(): string
     {
-        $this->model = $model;
-        $this->meta = $meta;
+        return 'metadata.stored';
+    }
+
+    /**
+     * Returns the full metadata definition for this domain event.
+     *
+     * @return DomainEventDefinition
+     */
+    public static function definition(): DomainEventDefinition
+    {
+        return new DomainEventDefinition(self::key(), 'metadata::base.events.metadata_stored.group', 'metadata::base.events.metadata_stored.title', 'metadata::base.events.metadata_stored.description', 'fas fa-save', [
+            'metadata',
+            'storage',
+            'management',
+        ]);
     }
 }
