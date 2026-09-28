@@ -14,11 +14,6 @@ use Throwable;
 trait HasMetadataType
 {
     /**
-     * The metadata custom fields
-     *
-     * @var array $metadata
-     */
-    /**
      * Set Metadata.
      *
      * @param Closure|array $callable
