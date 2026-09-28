@@ -2,7 +2,7 @@
 
 namespace JobMetric\Metadata;
 
-use JobMetric\Metadata\Typeify\Metadata;
+use JobMetric\Metadata\Support\Metadata;
 
 /**
  * HasDynamicMeta

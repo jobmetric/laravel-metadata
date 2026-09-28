@@ -1,6 +1,6 @@
 <?php
 
-namespace JobMetric\Metadata\Typeify;
+namespace JobMetric\Metadata\Support;
 
 use Closure;
 use Illuminate\Support\Collection;
@@ -18,8 +18,6 @@ trait HasMetadataType
      *
      * @var array $metadata
      */
-    protected array $metadata = [];
-
     /**
      * Set Metadata.
      *
@@ -33,8 +31,9 @@ trait HasMetadataType
         if ($callable instanceof Closure) {
             $callable($builder = new MetadataBuilder);
 
-            $this->metadata[$this->type][] = $builder->build();
+            $metadataItems = [$builder->build()];
         } else {
+            $metadataItems = [];
             foreach ($callable as $metadata) {
                 $builder = new MetadataBuilder;
 
@@ -44,11 +43,11 @@ trait HasMetadataType
                     $builder->hasFilter();
                 }
 
-                $this->metadata[$this->type][] = $builder->build();
+                $metadataItems[] = $builder->build();
             }
         }
 
-        $this->setTypeParam('metadata', $this->metadata);
+        $this->appendTypeParam('metadata', $metadataItems);
 
         return $this;
     }
@@ -60,8 +59,6 @@ trait HasMetadataType
      */
     public function getMetadata(): Collection
     {
-        $metadata = $this->getTypeParam('metadata', []);
-
-        return collect($metadata[$this->type] ?? []);
+        return collect($this->getTypeParam('metadata', []));
     }
 }
