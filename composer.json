@@ -14,6 +14,7 @@
     "require": {
         "php": ">=8.0.1",
         "laravel/framework": ">=9.19",
+        "jobmetric/laravel-custom-field": "^2.3.1",
         "jobmetric/laravel-package-core": "^1.22",
         "jobmetric/laravel-event-system": "^2.7"
     },
