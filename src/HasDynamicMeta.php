@@ -20,12 +20,12 @@ trait HasDynamicMeta
      */
     public static function bootHasDynamicMeta(): void
     {
-        $serviceType = getServiceTypeClass(static::class);
+        $serviceType = static::typeRegistry();
 
-        $types = $serviceType->getTypes();
+        $types = $serviceType->values();
 
         foreach ($types as $type) {
-            $innerType = $serviceType->type($type);
+            $innerType = $serviceType->for($type);
 
             foreach ($innerType->getMetadata() as $metadata) {
                 /**
