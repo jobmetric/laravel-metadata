@@ -29,6 +29,12 @@ class MetadataServiceProvider extends PackageCoreServiceProvider
      */
     public function afterBootPackage(): void
     {
+        if ($this->app->bound('EventRegistry')) {
+            $registry = $this->app->make('EventRegistry');
+            $registry->register(\JobMetric\Metadata\Events\Metadata\MetadataStoreCommittedEvent::class);
+            $registry->register(\JobMetric\Metadata\Events\Metadata\MetadataDeleteCommittedEvent::class);
+        }
+
         // Register events if EventRegistry is available
         // This ensures EventRegistry is available if EventSystemServiceProvider is loaded
         if ($this->app->bound('EventRegistry')) {

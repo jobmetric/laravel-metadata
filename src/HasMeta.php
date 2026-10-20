@@ -197,6 +197,9 @@ trait HasMeta
         ]);
 
         event(new MetadataStoredEvent($this, $model));
+        if ($model->wasRecentlyCreated || $model->wasChanged(['value', 'is_json'])) {
+            app(\JobMetric\EventSystem\Support\CommittedEventDispatcher::class)->dispatch(new \JobMetric\Metadata\Events\Metadata\MetadataStoreCommittedEvent($model->getKey()), $model->getConnectionName());
+        }
 
         return $this;
     }
@@ -239,6 +242,9 @@ trait HasMeta
                 $meta->delete();
 
                 event(new MetadataDeletedEvent($meta));
+        if (! $meta->exists) {
+            app(\JobMetric\EventSystem\Support\CommittedEventDispatcher::class)->dispatch(new \JobMetric\Metadata\Events\Metadata\MetadataDeleteCommittedEvent($meta->getKey()), $meta->getConnectionName());
+        }
             });
         } else {
             $this->metas()->get()->each(function ($meta) {
@@ -247,6 +253,9 @@ trait HasMeta
                 $meta->delete();
 
                 event(new MetadataDeletedEvent($meta));
+        if (! $meta->exists) {
+            app(\JobMetric\EventSystem\Support\CommittedEventDispatcher::class)->dispatch(new \JobMetric\Metadata\Events\Metadata\MetadataDeleteCommittedEvent($meta->getKey()), $meta->getConnectionName());
+        }
             });
         }
 
